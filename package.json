@@ -1,0 +1,28 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "-": "^0.0.1",
+    "express": "^4.17.3",
+    "g": "^2.0.1",
+    "mongoose": "^6.2.6",
+    "nodemon": "^2.0.16"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+    "node_modules/**/node_modules"
+    ],
+    "env": {
+      "NODE_ENV": "development",
+      "MONGO_URI" : "mongodb+srv://FitTogether:Fittogether123@fittogether.9hhdq.mongodb.net/?retryWrites=true&w=majority"
+    }
+  }
+}
