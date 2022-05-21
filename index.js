@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const userRoute = require('../server/routes/userRoute');
-const productRoute = require('../server/routes/productRoute');
+const userRoute = require('../BackendServer/routes/userRoute');
+const productRoute = require('../BackendServer/routes/productRoute');
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_URI).then(
