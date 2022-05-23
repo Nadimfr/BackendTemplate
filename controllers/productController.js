@@ -43,8 +43,30 @@ const getProducts = (request, response) => {
     });
 };
 
-const getProductsbyType = (req, res) => {
-  Product.find({ category: req.body.type })
+const getGymTools = (req, res) => {
+  Product.find({ category: "Gym Tools" })
+    .then((prod) => {
+      console.log(prod);
+      return res.status(200).json(prod);
+    })
+    .catch((error) => {
+      return res.status(500).json(error);
+    });
+};
+
+const getDrinks = (req, res) => {
+  Product.find({ category: "Fitness Drinks" })
+    .then((prod) => {
+      console.log(prod);
+      return res.status(200).json(prod);
+    })
+    .catch((error) => {
+      return res.status(500).json(error);
+    });
+};
+
+const getPackages = (req, res) => {
+  Product.find({ category: "Packages" })
     .then((prod) => {
       console.log(prod);
       return res.status(200).json(prod);
@@ -59,5 +81,7 @@ module.exports = {
   createProduct,
   getProduct,
   getProducts,
-  getProductsbyType,
+  getGymTools,
+  getDrinks,
+  getPackages,
 };
