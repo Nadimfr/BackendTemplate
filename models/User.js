@@ -3,26 +3,22 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        require: true,
         min: 2,
         max: 40,
-        unique: true
+        unique: false
     },
     first_name: {
         type: String,
-        required: true,
         max: 75,
         unique: false,
     },
     last_name: {
         type: String,
-        required: true,
         max: 75,
         unique: false,
     },
     age: {
         type: Number,
-        required: true,
         max: 75,
         unique: false,
     },
@@ -39,23 +35,23 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required: true,
         max: 75,
         unique: false,
     },
     phone_number: {
         type: Number,
-        required: true,
         unique: true,
     },
     height: {
         type: Number,
-        required: true,
         unique: false,
     },
     weight: {
         type: Number,
-        required: true,
+        unique: false,
+    },
+    token: {
+        type: String,
         unique: false,
     }
 });
