@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const userRoute = require("../BackendServer/routes/userRoute");
+const ticketRoute = require("../BackendServer/routes/ticketRoute");
 const productRoute = require("../BackendServer/routes/productRoute");
 const planRoute = require("../BackendServer/routes/planRoute");
 const mongoose = require("mongoose");
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/plans", planRoute);
+app.use("/api/tickets", ticketRoute);
 
 app.listen(8080, () => {
   console.log("Running");
