@@ -43,21 +43,21 @@ const getProducts = (request, response) => {
     });
 };
 
-// const getProductsbyType = (req, res) => {
-//   Product.find({ category: "Gym Tools" })
-//     .then((prod) => {
-//       console.log(prod);
-//       return response.status(200).json(prod);
-//     })
-//     .catch((error) => {
-//       return response.status(500).json(error);
-//     });
-// };
+const getProductsbyCategory = (request, response) => {
+  Product.find({ category: request.params.category })
+    .then((prod) => {
+      console.log(prod);
+      return response.status(200).json(prod);
+    })
+    .catch((error) => {
+      return response.status(500).json(error);
+    });
+};
 
 module.exports = {
   updateProduct,
   createProduct,
   getProduct,
   getProducts,
-  // getProductsbyType,
+  getProductsbyCategory,
 };
