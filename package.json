@@ -10,11 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "-": "^0.0.1",
-<<<<<<< HEAD
-    "bcryptjs": "^2.4.3",
-=======
     "bcrypt": "^5.0.1",
->>>>>>> c516a26c7716cf654217a4a5be24e3fefa4c0ed5
     "express": "^4.17.3",
     "express-validator": "^6.14.1",
     "g": "^2.0.1",
@@ -29,12 +25,8 @@
     ],
     "env": {
       "NODE_ENV": "development",
-<<<<<<< HEAD
-      "MONGO_URI": "mongodb+srv://FitTogether:Fittogether123@fittogether.9hhdq.mongodb.net/?retryWrites=true&w=majority"
-=======
       "MONGO_URI": "mongodb+srv://FitTogether:Fittogether123@fittogether.9hhdq.mongodb.net/?retryWrites=true&w=majority",
       "TOKEN_SECRET": "THISISASECRET"
->>>>>>> c516a26c7716cf654217a4a5be24e3fefa4c0ed5
     }
   }
 }
