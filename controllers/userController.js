@@ -66,8 +66,8 @@ const login = async (request, response) => {
     if (!password) {
       return response.status(400).send("Password cannot be empty");
     }
-
-    if (bcrypt.compare(password, user.password)) {
+    
+    if (await bcrypt.compare(password, user.password)) {
       const token = jwt.sign({ userId: user._id, email }, process.env.TOKEN_SECRET, { expiresIn: "2h" });
       user.token = token;
       return response.status(200).json(user);
