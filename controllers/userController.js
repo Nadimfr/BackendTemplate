@@ -46,12 +46,11 @@ const getUsers = (request, response) => {
 };
 
 const login = async (request, response) => {
-  console.log("LOGIN CONTROLLER")
+  console.log("LOGIN CONTROLLER");
 
   const { email, password } = request.body;
 
   try {
-
     // 400 -> Client Error
     if (!(email && password)) {
       return response.status(400).send("Please provide Username/Password");
@@ -66,25 +65,25 @@ const login = async (request, response) => {
     if (!password) {
       return response.status(400).send("Password cannot be empty");
     }
-    
+
     if (await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ userId: user._id, email }, process.env.TOKEN_SECRET, { expiresIn: "2h" });
+      const token = jwt.sign(
+        { userId: user._id, email },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "2h" }
+      );
       user.token = token;
       return response.status(200).json(user);
     }
 
     return response.status(400).send("Invalid User/Password");
-
   } catch (error) {
     console.log(error);
   }
-
 };
 
 const register = async (request, response) => {
-
   try {
-
     let { email, password } = request.body;
 
     if (!(email && password)) {
@@ -100,16 +99,18 @@ const register = async (request, response) => {
     user = await User.create({
       email: email.toLowerCase(),
       password,
-    })
+    });
 
-    const token = jwt.sign({ userId: user._id, email }, process.env.TOKEN_SECRET, { expiresIn: "2h" });
+    const token = jwt.sign(
+      { userId: user._id, email },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "2h" }
+    );
     user.token = token;
     return response.status(200).json(user);
-
   } catch (error) {
     console.log(error);
   }
-
 };
 
 module.exports = {
@@ -118,5 +119,5 @@ module.exports = {
   getUser,
   getUsers,
   login,
-  register
+  register,
 };
