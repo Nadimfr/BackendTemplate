@@ -41,6 +41,6 @@ app.use('/api/review', reviewRoute);
 app.use('/api/history', historyRoute);
 app.use('/api/recommendation', recommendationRoute);
 
-app.listen(5000, () => {
+app.listen(8080, () => {
   console.log('Running');
 });

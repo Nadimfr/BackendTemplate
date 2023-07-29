@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const formData = require('form-data');
 const Mailgun = require('mailgun.js');
-const { response } = require('express');
 const mailgun = new Mailgun(formData);
 const mg = mailgun.client({
   username: 'api',
@@ -19,6 +18,33 @@ const updateUser = async (request, response) => {
   } catch (error) {
     return response.status(500).json(error);
   }
+};
+
+const uploadPP = async (request, response) => {
+  const userId = request.params.id;
+  const imageUrl = request.body.image_url;
+  User.updateOne(
+    { _id: userId },
+    { $set: { image_url: imageUrl } },
+    (err, result) => {
+      if (err) {
+        console.error('Failed to update image_url:', err);
+
+        return response
+          .status(500)
+          .json({ error: 'Failed to update image_url' });
+      }
+
+      if (result.modifiedCount === 0) {
+        console.error('User not found');
+        client.close();
+        return response.status(404).json({ error: 'User not found' });
+      }
+      return response
+        .status(200)
+        .json({ message: 'Image URL updated successfully' });
+    }
+  );
 };
 
 const createUser = (request, response) => {
@@ -39,6 +65,24 @@ const getUser = (request, response) => {
     .catch((error) => {
       return response.status(500).json(error);
     });
+};
+
+const getUserByEmail = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Return user details
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 const getUsers = (request, response) => {
@@ -87,6 +131,30 @@ const login = async (request, response) => {
   }
 };
 
+const resetPassword = async (req, res) => {
+  const { email, password } = req.body;
+  console.log('New password:', password);
+  try {
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update the user's password with the new hashed password
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.status(200).json({ message: 'Password reset successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 const sendVerificationCode = async (req, res) => {
   try {
     const { email } = req.body;
@@ -120,6 +188,12 @@ const register = async (req, res) => {
     // Validate the input data
     if (!username || !email || !password) {
       return res.status(400).send('Name, email, and password are required');
+    }
+
+    // Check if email already exists
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).send('Email already exists');
     }
 
     // Hash the password using bcrypt
@@ -182,4 +256,7 @@ module.exports = {
   register,
   deleteUser,
   sendVerificationCode,
+  uploadPP,
+  resetPassword,
+  getUserByEmail,
 };

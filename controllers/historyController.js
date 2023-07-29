@@ -2,11 +2,12 @@ const History = require('../models/History');
 
 const createHistory = async (request, response) => {
   try {
-    const { user_id, text, created_at } = request.body;
+    const { user_id, text, created_at, recommendations } = request.body;
 
     const history = new History({
       user_id,
       text,
+      recommendations,
       created_at,
     });
 
@@ -30,7 +31,21 @@ const getHistoriesByUserId = (request, response) => {
     });
 };
 
+const getHistoryById = (request, response) => {
+  const { historyId } = request.params;
+  History.findOne({ _id: ObjectId(historyId) })
+    .then((history) => {
+      console.log(historyId);
+      console.log(history);
+      return response.status(200).json(history);
+    })
+    .catch((error) => {
+      return response.status(500).json(error);
+    });
+};
+
 module.exports = {
   createHistory,
   getHistoriesByUserId,
+  getHistoryById,
 };
